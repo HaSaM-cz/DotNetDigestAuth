@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>FlakeyBit.DigestAuthentication.Implementation</AssemblyName>
     <RootNamespace>FlakeyBit.DigestAuthentication.Implementation</RootNamespace>
     <PackageId>FlakeyBit.DigestAuthentication.Implementation</PackageId>
@@ -18,9 +18,5 @@
     <RepositoryType>Git</RepositoryType>
     <PackageTags>Digest Authentication Asp.NET</PackageTags>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
-  </ItemGroup>
 
 </Project>

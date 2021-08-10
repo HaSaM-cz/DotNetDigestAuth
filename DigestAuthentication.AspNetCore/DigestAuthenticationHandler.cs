@@ -41,6 +41,7 @@ namespace FlakeyBit.DigestAuthentication.AspNetCore
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync() {
+            
             if (!Request.Headers.TryGetValue(DigestAuthImplementation.AuthorizationHeaderName, out var headerValue)) {
                 return AuthenticateResult.NoResult();
             }
@@ -49,13 +50,13 @@ namespace FlakeyBit.DigestAuthentication.AspNetCore
                 return AuthenticateResult.NoResult();
             }
 
-			string validatedUsername = await _digestAuth.ValidateChallangeAsync(challengeResponse, Request.Method);
+			string validatedUsername = await _digestAuth.ValidateChallengeAsync(challengeResponse, Request.Method);
 
             if (validatedUsername == null) {
                 return AuthenticateResult.NoResult();
             }
 
-            var identity = new ClaimsIdentity(validatedUsername);
+            var identity = new ClaimsIdentity(Scheme.Name, DigestAuthImplementation.DigestAuthenticationClaimName, null);
             identity.AddClaim(new Claim(DigestAuthImplementation.DigestAuthenticationClaimName, validatedUsername));
             var principal = new ClaimsPrincipal(identity);
 

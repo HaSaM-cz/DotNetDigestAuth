@@ -5,13 +5,15 @@ namespace FlakeyBit.DigestAuthentication.AspNetCore
 {
     public static class AuthenticationBuilderExtensions
     {
+
         public static AuthenticationBuilder AddDigestAuthentication(this AuthenticationBuilder builder,
-                                                                    DigestAuthenticationConfiguration config) {
-            return builder.AddScheme<DigestAuthenticationOptions, DigestAuthenticationHandler>("Digest",
-                                                                                               "Digest",
-                                                                                               options => {
-                                                                                                   options.Configuration = config;
-                                                                                               });
+                                                                    DigestAuthenticationConfiguration config,
+                                                                    string scheme = null)
+        {
+            scheme = DigestAuthentication.GetScheme(scheme);
+            return builder.AddScheme<DigestAuthenticationOptions, DigestAuthenticationHandler>(
+                scheme, scheme,
+                options => options.Configuration = config);
         }
     }
 }

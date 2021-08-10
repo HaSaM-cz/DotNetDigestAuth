@@ -76,7 +76,7 @@ namespace FlakeyBit.DigestAuthentication.Implementation
 			return String.Join(", ", parts.Select(FormatHeaderComponent));
 		}
 		
-        public async Task<string> ValidateChallangeAsync(DigestChallengeResponse challengeResponse, string requestMethod) {
+        public async Task<string> ValidateChallengeAsync(DigestChallengeResponse challengeResponse, string requestMethod) {
             if (challengeResponse == null) {
 	            throw new ArgumentNullException(nameof(challengeResponse));
             }

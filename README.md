@@ -1,7 +1,7 @@
 # DotNetDigestAuth
-Implementation of Digest Authentication for ASP.NET Core (AuthenticationHandler) &amp; ASP.NET (OWIN Middleware).
+Implementation of Digest Authentication for ASP.NET Core (AuthenticationHandler).
 
-Supports: ASP.NET running on .NET Framework 4.6.1+ or ASP.NET Core 2.0+ (i.e. NET Standard 2.0+)
+Supports: ASP.NET Core 5.0+
 
 ## General:
 - Depending on the usage scenario, you have the option of storing the user secrets (passwords) in plaintext or only storing the hashes of the secrets (recommended). 
@@ -94,53 +94,5 @@ This will add a claim of type `DIGEST_AUTHENTICATION_NAME` (value will be the au
     }
 ```
 
-## Usage in ASP.NET Classic:
-
-- You'll want to reference the NuGet package & namespace `FlakeyBit.DigestAuthentication.AspNetClassic`.
-
-In your web host startup:
-
-```C#
-    public class Startup
-    {
-        public void Configuration(IAppBuilder app) {
-            HttpConfiguration config = new HttpConfiguration();
-            config.Routes.MapHttpRoute(name: "DefaultApi",
-                                       routeTemplate: "api/{controller}/{id}",
-                                       defaults: new {
-                                           id = RouteParameter.Optional
-                                       });
-
-            app.Use<DigestAuthenticationMiddleware>(DigestAuthenticationConfiguration.Create("SomeVerySecureServerNonceSecret", "SomeDescriptiveRealmName", 30), new ExampleUsernameHashedSecretProvider()); // Or an IUsernameSecretProvider for plaintext
-            app.UseWebApi(config);
-        }
-    }
-```
-
-This will add a claim of type `DIGEST_AUTHENTICATION_NAME` (value will be the authenticated user name) to the principal on the request context. If you want to simply check for a claim of this type on a controller action, you can use the `DigestAuthorize` attribute
-
-```C#
-    public class ValuesController : ApiController
-    {
-        [DigestAuthorize]
-        public string Get() {
-            return "Protected info!";
-        }
-    }
-```
-
-If you want something more sophisticated than that, you'll need to roll your own filter.
-
 ## More info:
-For working examples, check out the AspNetClassicApp & AspNetCoreApp projects in the solution.
-
-### Build Status
-
-#### DigestAuthentication.Implementation
-[![Build Status](https://eddiewould.visualstudio.com/DigestAuthentication/_apis/build/status/DigestAuthentication.Implementation?branchName=master)](https://eddiewould.visualstudio.com/DigestAuthentication/_build/latest?definitionId=6&branchName=master)
-
-#### DigestAuthentication.AspNetCore
-[![Build Status](https://eddiewould.visualstudio.com/DigestAuthentication/_apis/build/status/DigestAuthentication.AspNetCore?branchName=master)](https://eddiewould.visualstudio.com/DigestAuthentication/_build/latest?definitionId=5&branchName=master)
-
-#### DigestAuthentication.AspNetClassic
-[![Build Status](https://eddiewould.visualstudio.com/DigestAuthentication/_apis/build/status/DigestAuthentication.AspNetClassic?branchName=master)](https://eddiewould.visualstudio.com/DigestAuthentication/_build/latest?definitionId=4&branchName=master)
+For working examples, check out the AspNetCoreApp projects in the solution.
